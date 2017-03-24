@@ -1,4 +1,6 @@
-# An H2 File-based Database Example in Spring Boot
+# An H2 File-based Database Example with Table Joins in Spring Boot
+
+This Spring Boot project extends the h2-filebased-db-example by adding an additional table that has a one-to-one join. In it the "Users" table is joined to the "Occupations" table through the key. The implementation of the REST returns the User and Occupation data and permits the inclusion of an Occupation on the save/create POST.
 
 This Spring Boot example shows how a local file-based database can be embedded in a project. The database is H2 and using the parameters set in the application.properties file, you can instantiate a database that will exist in memory, or be written to any accessible file system. In this example, the database files are written to the project's folder as a file in a "data" folder. The location is also determined by settings in the application properties folder.
 
@@ -54,10 +56,11 @@ $ curl -v http://localhost:9000/getUsers
 < HTTP/1.1 200
 < Content-Type: application/json;charset=UTF-8
 < Transfer-Encoding: chunked
-< Date: Thu, 23 Mar 2017 20:12:34 GMT
+< Date: Fri, 24 Mar 2017 15:57:26 GMT
 <
 * Connection #0 to host localhost left intact
-[{"id":1,"username":"wilma","firstName":"Wilma","lastName":"Flintstone","email":"wflintstone@example.com"},{"id":2,"username":"fred","firstName":"Fred","lastName":"Flintstone","email":"fflintstone@example.com"},{"id":3,"username":"barney","firstName":"Barney","lastName":"Rubble","email":"brubble@example.com"},{"id":4,"username":"betty","firstName":"Betty","lastName":"Rubble","email":"brubble2@example.com"}]
+[{"id":1,"username":"fred","firstName":"Fred","lastName":"Flintstone","email":"fflintstone@example.com","occupation":{"id":1,"category":"Skilled Labor","title":"Dino-crane Operator"}},{"id":2,"username":"wilma","firstName":"Wilma","lastName":"Flintstone","email":"wflintstone@example.com","occupation":{"id":3,"category":"Homemaker","title":"Homemaker"}},{"id":3,"username":"barney","firstName":"Barney","lastName":"Rubble","email":"brubble@example.com","occupation":{"id":1,"category":"Skilled Labor","title":"Dino-crane Operator"}},{"id":4,"username":"betty","firstName":"Betty","lastName":"Rubble","email":"brubble2@example.com","occupation":{"id":3,"category":"Homemaker","title":"Homemaker"}}]
+
 
 ```
 
@@ -76,10 +79,10 @@ $ curl -v http://localhost:9000/getUser/2
 < HTTP/1.1 200
 < Content-Type: application/json;charset=UTF-8
 < Transfer-Encoding: chunked
-< Date: Thu, 23 Mar 2017 20:14:32 GMT
+< Date: Fri, 24 Mar 2017 15:58:35 GMT
 <
 * Connection #0 to host localhost left intact
-{"id":2,"username":"fred","firstName":"Fred","lastName":"Flintstone","email":"fflintstone@example.com"}
+{"id":2,"username":"wilma","firstName":"Wilma","lastName":"Flintstone","email":"wflintstone@example.com","occupation":{"id":3,"category":"Homemaker","title":"Homemaker"}}
 
 ```
 
@@ -89,8 +92,10 @@ On success, a POST of the JSON object will return the new record with its genera
 
 ```
 
-$ curl -H "Content-Type: application/json" -X POST -d '{"username":"pebbles","firstName":"Pebbles","lastName":"Flintstone","email":"pflintstone@example.com"}'  http://localhost:9000/saveUser
-{"id":8,"username":"pebbles","firstName":"Pebbles","lastName":"Flintstone","email":"pflintstone@example.com"}
+$ curl -H "Content-Type: application/json" -X POST -d '{"username":"pebbles","firstName":"Pebbles","lastName":"Flintstone","email":"pflintstone@example.com","occupation": {"id": 4}}'  http://localhost:9000/saveUser
+{"id":8,"username":"pebbles","firstName":"Pebbles","lastName":"Flintstone","email":"pflintstone@example.com". "occupation": {"id": 4,"title": null,"category": null}}
+
+## Note that subsequent "gets" will provide the full occupation data.
 
 ```
 

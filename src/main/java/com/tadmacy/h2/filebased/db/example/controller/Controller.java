@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tadmacy.h2.filebased.db.example.model.OccupationDao;
 import com.tadmacy.h2.filebased.db.example.model.User;
 import com.tadmacy.h2.filebased.db.example.model.UserDao;
 
@@ -26,7 +25,6 @@ public class Controller {
 	
     @Autowired
     private UserDao userDao;
-    private OccupationDao groupDao;
 
     @RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public HttpEntity<String> sanityCheck() {
@@ -66,10 +64,6 @@ public class Controller {
 	public User saveUser(@RequestBody User u) {
     	
     	logger.info("saveUser entered...");
-    	
-//    	if (u.getOccupation() != null) {
-//    		;
-//    	}
     	
 		User newUser = new User();
 		newUser = userDao.save(u);

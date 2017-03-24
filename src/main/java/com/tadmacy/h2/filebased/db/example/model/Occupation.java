@@ -29,11 +29,11 @@ public class Occupation {
 		this.id = id;
 	}
 
-	public String getCategoty() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategoty(String category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
@@ -44,29 +44,5 @@ public class Occupation {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
-	   // private Iterable<User> users;
-//	@OneToMany(mappedBy = "name", cascade = CascadeType.ALL)
-//    public Iterable<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Iterable<User> users) {
-//        this.users = users;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        String result = String.format("Group[id=%d, name='%s']%n", id, name);
-//        if (users != null) {
-//            for(User user : users) {
-//                result += String.format("User[id=%d, name='%s']%n", user.getId(), user.getUsername());
-//            }
-//        }
-//
-//        return result;
-//    }
     
 }
