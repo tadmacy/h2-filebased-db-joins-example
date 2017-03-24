@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
@@ -13,7 +16,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 public class User {
 	
     @Id
-    
     @Column(name="ID", unique=true, updatable=false, nullable=false)
 	@GeneratedValue
 	private long id;
@@ -30,9 +32,17 @@ public class User {
     @Column(name="Email", unique=true, updatable=true, nullable=false)
     private String email;
     
+    @OneToOne
+    @JoinColumn(name="occupation_id")
+    private Occupation occupation;
+    
     // Getters and setters
 
     public User() {
+    }
+    
+    public User(Occupation occupation) {
+    	this.occupation = occupation;
     }
 
 	public Long getId() {
@@ -73,6 +83,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Occupation getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(Occupation occupation) {
+		this.occupation = occupation;
 	}
 
 }
